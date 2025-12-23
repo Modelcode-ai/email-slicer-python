@@ -10,7 +10,6 @@ Email Slicer is a simple tool where the email address is provided as an input an
 
 ![Python][python-shield]
 
-<!-- EXAMPLE -->
 
 ## Example
 
