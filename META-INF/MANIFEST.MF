@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Archiver-Version: Plexus Archiver
+Created-By: Apache Maven 3.6.3
+Built-By: root
+Build-Jdk: 17.0.17
+Main-Class: com.emailslicer.Main
+
