@@ -2,14 +2,14 @@ package com.emailslicer;
 
 /**
  * Parses email addresses into username and domain components.
- *
- * <p>This parser implements the same semantics as the original
- * Python email slicer:
+ * <p>
+ * Validation rules:
  * <ul>
- *   <li>Splits on the first {@code @} character only</li>
- *   <li>Empty username is allowed (e.g., {@code @domain.com})</li>
- *   <li>Empty domain is allowed (e.g., {@code user@})</li>
- *   <li>Multiple {@code @} characters are allowed</li>
+ *   <li>An email is valid if it contains at least one '@' character</li>
+ *   <li>The username is the substring before the first '@'</li>
+ *   <li>The domain is the substring after the first '@'</li>
+ *   <li>Empty username or domain is allowed</li>
+ *   <li>Multiple '@' characters are allowed (splits on first '@')</li>
  * </ul>
  */
 public final class EmailParser {
@@ -19,60 +19,58 @@ public final class EmailParser {
     }
 
     /**
-     * Parses an email address into username and domain components.
+     * Parses an email address into its username and domain components.
      *
-     * <p>The input should already be trimmed before calling this method.
-     *
-     * @param email the email address to parse
-     * @return a {@link ParsedEmail} containing the username and domain
-     * @throws IllegalArgumentException if email has no {@code @} character
+     * @param email the email address to parse (should be trimmed)
+     * @return a ParsedEmail containing the username and domain
+     * @throws IllegalArgumentException if email has no '@' character
      */
     public static ParsedEmail parse(final String email) {
-        int atIndex = email.indexOf('@');
-        if (atIndex == -1) {
+        if (email == null || email.indexOf('@') == -1) {
             throw new IllegalArgumentException(
-                "Email must contain an '@' character");
+                    "Email must contain an '@' character");
         }
 
-        String username = email.substring(0, atIndex);
-        String domain = email.substring(atIndex + 1);
+        int atIndex = email.indexOf('@');
+        String user = email.substring(0, atIndex);
+        String dom = email.substring(atIndex + 1);
 
-        return new ParsedEmail(username, domain);
+        return new ParsedEmail(user, dom);
     }
 
     /**
-     * Represents a parsed email with username and domain components.
+     * Represents a parsed email address with username and domain components.
      */
     public static final class ParsedEmail {
-        /** The username part of the email (before the @). */
+        /** The username part of the email (before the '@'). */
         private final String username;
-        /** The domain part of the email (after the @). */
+        /** The domain part of the email (after the '@'). */
         private final String domain;
 
         /**
-         * Constructs a new ParsedEmail.
+         * Constructs a ParsedEmail with the given username and domain.
          *
-         * @param theUsername the username part of the email
-         * @param theDomain   the domain part of the email
+         * @param user the username part of the email
+         * @param dom the domain part of the email
          */
-        public ParsedEmail(final String theUsername, final String theDomain) {
-            this.username = theUsername;
-            this.domain = theDomain;
+        public ParsedEmail(final String user, final String dom) {
+            this.username = user;
+            this.domain = dom;
         }
 
         /**
-         * Returns the username part of the email address.
+         * Returns the username part of the email.
          *
-         * @return the username (the part before the @)
+         * @return the username
          */
         public String getUsername() {
             return username;
         }
 
         /**
-         * Returns the domain part of the email address.
+         * Returns the domain part of the email.
          *
-         * @return the domain (the part after the @)
+         * @return the domain
          */
         public String getDomain() {
             return domain;
