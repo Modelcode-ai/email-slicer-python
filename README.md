@@ -6,6 +6,8 @@ A simple Java 17 CLI tool that parses email addresses into username and domain c
 
 Email Slicer is an educational Java application that demonstrates the migration of a simple Python script to an idiomatic Java CLI application. It extracts the username (local part before '@') and domain (part after '@') from email addresses using string slicing operations.
 
+This project is a Java 17 migration of the [original Python Email Slicer](https://github.com/Modelcode-ai/email-slicer-python), designed specifically for learners transitioning from Python to Java. It preserves the core simplicity of the Python script while demonstrating key Java concepts such as object-oriented design, checked exceptions, records, and proper separation of concerns.
+
 ## Features
 
 - **Command-line argument mode**: Pass email as an argument
@@ -124,6 +126,57 @@ This project demonstrates:
 - Maven project structure and configuration
 - JUnit 5 testing with stream redirection
 
+## Python to Java Migration
+
+### Behavioral Differences
+
+The Java version intentionally implements **stricter validation** compared to the original Python script:
+
+| Scenario | Python Behavior | Java Behavior |
+|----------|----------------|---------------|
+| Multiple `@` symbols (`user@@example.com`) | Accepts; uses first `@` | **Rejects** with `InvalidEmailException` |
+| Empty username (`@example.com`) | Accepts; produces empty username | **Rejects** with `InvalidEmailException` |
+| Empty domain (`user@`) | Accepts; produces empty domain | **Rejects** with `InvalidEmailException` |
+| Whitespace (`  user@example.com  `) | Must call `.strip()` manually | **Automatically trimmed** |
+
+These enhancements demonstrate better validation practices while maintaining the educational focus on string slicing concepts.
+
+### Code Comparison
+
+Here's how key operations translate from Python to Java:
+
+**Finding the `@` position:**
+```python
+# Python
+at_index = email.index("@")
+```
+```java
+// Java
+int atIndex = email.indexOf('@');
+```
+
+**Extracting the username (before `@`):**
+```python
+# Python
+username = email[:email.index("@")]
+```
+```java
+// Java
+String username = email.substring(0, atIndex);
+```
+
+**Extracting the domain (after `@`):**
+```python
+# Python
+domain = email[email.index("@") + 1:]
+```
+```java
+// Java
+String domain = email.substring(atIndex + 1);
+```
+
+The Java implementation uses `indexOf()` and `substring()` to mirror Python's slicing operations, making the translation straightforward for Python developers learning Java.
+
 ## License
 
-This is an educational example project.
+Distributed under the MIT License. This Java implementation is based on the [original Python Email Slicer](https://github.com/Modelcode-ai/email-slicer-python) by Avinaba Bera.
