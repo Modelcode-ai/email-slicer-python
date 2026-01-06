@@ -7,6 +7,8 @@
  *
  * <p>Key components:
  * <ul>
+ *   <li>{@link com.modelcode.emailslicer.EmailSlicerApp} - CLI entry point
+ *       and user interface</li>
  *   <li>{@link com.modelcode.emailslicer.EmailParser} - Core parsing
  *       service with validation logic</li>
  *   <li>{@link com.modelcode.emailslicer.EmailParts} - Immutable result
