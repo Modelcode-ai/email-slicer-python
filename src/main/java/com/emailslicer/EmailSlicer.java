@@ -1,5 +1,7 @@
 package com.emailslicer;
 
+import java.util.Scanner;
+
 /**
  * Email Slicer - A simple CLI tool that parses email addresses.
  *
@@ -7,6 +9,11 @@ package com.emailslicer;
  * (local part before @) and domain (part after @) as output.
  */
 public class EmailSlicer {
+
+    // User-facing string constants
+    private static final String PROMPT_MESSAGE = "Please enter your Email Id:";
+    private static final String USERNAME_OUTPUT = "Your username is:  ";
+    private static final String DOMAIN_OUTPUT = "Your domain is:  ";
 
     /**
      * Immutable data model representing a parsed email address.
@@ -65,9 +72,24 @@ public class EmailSlicer {
     /**
      * Main entry point for the Email Slicer CLI application.
      *
+     * <p>Reads an email address from standard input, parses it into username
+     * and domain components, and prints the results. Uses try-with-resources
+     * to ensure proper Scanner cleanup.
+     *
      * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
-        System.out.println("Email Slicer - Java 17 (placeholder)");
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println(PROMPT_MESSAGE);
+            String input = scanner.nextLine().strip();
+
+            try {
+                ParsedEmail parsed = parseEmail(input);
+                System.out.println(USERNAME_OUTPUT + parsed.username());
+                System.out.println(DOMAIN_OUTPUT + parsed.domain());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Please enter a valid Email Id.");
+            }
+        }
     }
 }
