@@ -62,7 +62,6 @@ out/
 !.yarn/versions
 
 # ----- Rust -----
-target/
 **/*.rs.bk
 *.pdb
 
@@ -72,8 +71,9 @@ target/
 *.war
 *.ear
 *.nar
+target/
 .gradle/
-.mvn/wrapper/maven-wrapper.jar
+.mvn/
 hs_err_pid*
 replay_pid*
 
