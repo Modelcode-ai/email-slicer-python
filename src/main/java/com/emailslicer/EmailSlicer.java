@@ -16,7 +16,34 @@ public class EmailSlicer {
      *                                  empty username or domain
      */
     public EmailComponents parse(String rawInput) {
-        // Placeholder — implementation in a subsequent task.
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (rawInput == null || rawInput.isBlank()) {
+            throw new IllegalArgumentException("Email must not be null or blank");
+        }
+
+        String email = rawInput.strip();
+
+        int firstAt = email.indexOf('@');
+        int lastAt = email.lastIndexOf('@');
+
+        if (firstAt == -1) {
+            throw new IllegalArgumentException("Email must contain exactly one '@' character");
+        }
+
+        if (firstAt != lastAt) {
+            throw new IllegalArgumentException("Email must contain exactly one '@' character");
+        }
+
+        String username = email.substring(0, firstAt);
+        String domain = email.substring(firstAt + 1);
+
+        if (username.isEmpty()) {
+            throw new IllegalArgumentException("Username part must not be empty");
+        }
+
+        if (domain.isEmpty()) {
+            throw new IllegalArgumentException("Domain part must not be empty");
+        }
+
+        return new EmailComponents(username, domain);
     }
 }
