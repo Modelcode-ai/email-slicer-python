@@ -34,6 +34,7 @@ public final class EmailSlicer {
      * @throws IllegalArgumentException if the input is null, blank, or not a valid email format
      */
     public static ParsedEmail parse(String rawInput) {
+        System.out.println("[TRACE] Parsing email input...");
         if (rawInput == null) {
             throw new IllegalArgumentException("email must not be null");
         }
