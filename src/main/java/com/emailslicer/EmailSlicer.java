@@ -34,7 +34,37 @@ public class EmailSlicer {
      * @throws IllegalArgumentException if the email address is invalid
      */
     public Result slice(String rawEmail) {
-        // TODO: implement in next task
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (rawEmail == null) {
+            throw new IllegalArgumentException("Email address must not be null");
+        }
+
+        String trimmed = rawEmail.strip();
+
+        if (trimmed.isEmpty()) {
+            throw new IllegalArgumentException("Email address must not be empty");
+        }
+
+        int atIndex = trimmed.indexOf('@');
+
+        if (atIndex == -1) {
+            throw new IllegalArgumentException("Email address must contain '@'");
+        }
+
+        if (atIndex == 0) {
+            throw new IllegalArgumentException("Email address must have a username before '@'");
+        }
+
+        if (atIndex == trimmed.length() - 1) {
+            throw new IllegalArgumentException("Email address must have a domain after '@'");
+        }
+
+        if (trimmed.indexOf('@', atIndex + 1) != -1) {
+            throw new IllegalArgumentException("Email address must contain exactly one '@'");
+        }
+
+        String username = trimmed.substring(0, atIndex);
+        String domain = trimmed.substring(atIndex + 1);
+
+        return new Result(username, domain);
     }
 }
