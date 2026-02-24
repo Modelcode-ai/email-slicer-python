@@ -13,8 +13,17 @@ public class EmailSlicer {
      * @throws IllegalArgumentException if the input does not contain an '@' character
      */
     public static EmailParts slice(String rawInput) {
-        // Implementation to follow
-        throw new UnsupportedOperationException("Not yet implemented");
+        String email = rawInput.strip();
+
+        int atIndex = email.indexOf('@');
+        if (atIndex == -1) {
+            throw new IllegalArgumentException("Input does not contain an '@' character.");
+        }
+
+        String username = email.substring(0, atIndex);
+        String domain = email.substring(atIndex + 1);
+
+        return new EmailParts(username, domain);
     }
 
     /**
