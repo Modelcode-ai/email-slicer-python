@@ -20,8 +20,14 @@ public final class EmailSlicer {
      * @throws IllegalArgumentException if the input does not contain an {@code @} character
      */
     public static ParsedEmail parse(String rawInput) {
-        // placeholder — implementation in next task
-        throw new UnsupportedOperationException("Not yet implemented");
+        String trimmed = rawInput.strip();
+        int atIndex = trimmed.indexOf('@');
+        if (atIndex == -1) {
+            throw new IllegalArgumentException("Please enter a valid Email Id.");
+        }
+        String username = trimmed.substring(0, atIndex);
+        String domain = trimmed.substring(atIndex + 1);
+        return new ParsedEmail(username, domain);
     }
 
     /**
