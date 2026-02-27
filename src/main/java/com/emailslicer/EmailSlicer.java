@@ -18,7 +18,33 @@ public class EmailSlicer {
      *                                  contain a valid {@code @} placement
      */
     public EmailParts parse(String rawInputEmail) {
-        // TODO: implement in next task
-        throw new UnsupportedOperationException("Not yet implemented");
+        if (rawInputEmail == null) {
+            throw new IllegalArgumentException("Email input must not be null");
+        }
+
+        var trimmed = rawInputEmail.trim();
+
+        if (trimmed.isEmpty()) {
+            throw new IllegalArgumentException("Email input must not be empty");
+        }
+
+        int atIndex = trimmed.indexOf('@');
+
+        if (atIndex == -1) {
+            throw new IllegalArgumentException("Email must contain an '@' symbol");
+        }
+
+        if (atIndex == 0) {
+            throw new IllegalArgumentException("Email must have a username before '@'");
+        }
+
+        if (atIndex == trimmed.length() - 1) {
+            throw new IllegalArgumentException("Email must have a domain after '@'");
+        }
+
+        var username = trimmed.substring(0, atIndex);
+        var domain = trimmed.substring(atIndex + 1);
+
+        return new EmailParts(username, domain);
     }
 }
