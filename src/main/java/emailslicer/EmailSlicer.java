@@ -1,5 +1,7 @@
 package emailslicer;
 
+import java.util.logging.Logger;
+
 /**
  * Core parsing and validation logic for email addresses.
  * <p>
@@ -8,6 +10,8 @@ package emailslicer;
  * the original Python {@code emailSlicer.py} script.
  */
 public final class EmailSlicer {
+
+    private static final Logger LOGGER = Logger.getLogger(EmailSlicer.class.getName());
 
     private EmailSlicer() {
         // Utility class — not meant to be instantiated
@@ -27,6 +31,8 @@ public final class EmailSlicer {
      *                               or does not contain a valid {@code @} separator
      */
     public static EmailParts parse(String input) {
+        LOGGER.fine(() -> "Entering parse method with input: " + (input == null ? "null" : "\"" + input + "\""));
+
         if (input == null) {
             throw new InvalidEmailException("Email must not be null");
         }
