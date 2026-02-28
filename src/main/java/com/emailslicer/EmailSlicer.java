@@ -1,6 +1,7 @@
 package com.emailslicer;
 
 import java.util.Optional;
+import java.util.Scanner;
 
 /**
  * Email Slicer — parses an email address into its username and domain parts.
@@ -45,6 +46,19 @@ public class EmailSlicer {
     }
 
     public static void main(String[] args) {
-        // CLI entry point — to be implemented
+        System.out.println("Please enter your Email Id:");
+
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+
+        Optional<EmailParts> result = parseEmail(input);
+
+        if (result.isPresent()) {
+            EmailParts parts = result.get();
+            System.out.println("Your username is: " + parts.username());
+            System.out.println("Your domain is: " + parts.domain());
+        } else {
+            System.out.println("Please enter a valid Email Id.");
+        }
     }
 }
