@@ -69,11 +69,11 @@ target/
 # ----- Java / Kotlin / Scala / Gradle / Maven -----
 *.class
 *.jar
+!.mvn/wrapper/maven-wrapper.jar
 *.war
 *.ear
 *.nar
 .gradle/
-.mvn/wrapper/maven-wrapper.jar
 hs_err_pid*
 replay_pid*
 
