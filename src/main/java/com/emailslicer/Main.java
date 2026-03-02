@@ -1,6 +1,7 @@
 package com.emailslicer;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 /**
  * CLI entry point for the Email Slicer tool.
@@ -13,7 +14,10 @@ import java.util.Scanner;
  */
 public class Main {
 
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
     public static void main(String[] args) {
+        LOGGER.info("Email Slicer application started");
         System.out.println("Please enter your Email Id:");
 
         try (Scanner scanner = new Scanner(System.in)) {
