@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-19T21:11:39.696755+00:00
+Generated at: 2026-03-19T21:13:58.032373+00:00
 Project: emailslicer-dkasargod
 Milestone: 2
 """
@@ -55,240 +55,208 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_basic",
         "category": "HAPPY_PATH",
         "description": "Valid email address is sliced into username and domain",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'user@example.com' | python emailSlicer.py"
         ],
-        "stdin": "user@example.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_happy_path_username_value",
         "category": "HAPPY_PATH",
         "description": "Username part is correctly extracted from a valid email",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'user@example.com' | python emailSlicer.py"
         ],
-        "stdin": "user@example.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "user",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_happy_path_domain_value",
         "category": "HAPPY_PATH",
         "description": "Domain part is correctly extracted from a valid email",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'user@example.com' | python emailSlicer.py"
         ],
-        "stdin": "user@example.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "example.com",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_happy_path_short_email",
         "category": "HAPPY_PATH",
         "description": "Minimal valid email a@b.co is sliced correctly",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'a@b.co' | python emailSlicer.py"
         ],
-        "stdin": "a@b.co\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_happy_path_prompt_displayed",
         "category": "HAPPY_PATH",
         "description": "Application displays the email prompt message",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'user@example.com' | python emailSlicer.py"
         ],
-        "stdin": "user@example.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter your Email Id",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_whitespace_leading_trailing",
         "category": "BOUNDARY",
         "description": "Leading and trailing whitespace is stripped before slicing",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo '  user@example.com  ' | python emailSlicer.py"
         ],
-        "stdin": "  user@example.com  \n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_whitespace_stripped_username",
         "category": "BOUNDARY",
         "description": "Username extracted correctly after stripping whitespace",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo '  user@example.com  ' | python emailSlicer.py"
         ],
-        "stdin": "  user@example.com  \n",
         "expected_exit_code": 0,
         "expected_stdout": "user",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_missing_at_sign",
         "category": "INVALID_ARGS",
         "description": "Email without @ sign is rejected with error message",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'invalidemail.com' | python emailSlicer.py"
         ],
-        "stdin": "invalidemail.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "valid Email",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_multiple_at_signs",
         "category": "BOUNDARY",
-        "description": "Email with multiple @ signs \u2014 Python treats as valid using first @ index",
-        "command": "python",
-        "subcommand": "",
+        "description": "Email with multiple @ signs - Python treats as valid using first @ index",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'user@@domain.com' | python emailSlicer.py"
         ],
-        "stdin": "user@@domain.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_multiple_at_separated",
         "category": "BOUNDARY",
-        "description": "Email with two separate @ signs (a@b@c.com) \u2014 Python treats as valid using first @ index",
-        "command": "python",
-        "subcommand": "",
+        "description": "Email with two separate @ signs is treated as valid by Python",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'a@b@c.com' | python emailSlicer.py"
         ],
-        "stdin": "a@b@c.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_empty_input",
         "category": "BOUNDARY",
         "description": "Empty string input is rejected with error message",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo '' | python emailSlicer.py"
         ],
-        "stdin": "\n",
         "expected_exit_code": 0,
         "expected_stdout": "valid Email",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_blank_input",
         "category": "BOUNDARY",
-        "description": "Blank (whitespace only) input is rejected with error message",
-        "command": "python",
-        "subcommand": "",
+        "description": "Blank whitespace only input is rejected with error message",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo '   ' | python emailSlicer.py"
         ],
-        "stdin": "   \n",
         "expected_exit_code": 0,
         "expected_stdout": "valid Email",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_missing_username",
         "category": "BOUNDARY",
-        "description": "Email with no username part (@domain.com) \u2014 Python treats as valid since @ is found",
-        "command": "python",
-        "subcommand": "",
+        "description": "Email with no username part - Python treats as valid since @ is found",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo '@domain.com' | python emailSlicer.py"
         ],
-        "stdin": "@domain.com\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_missing_domain",
         "category": "BOUNDARY",
-        "description": "Email with no domain part (user@) \u2014 Python treats as valid since @ is found",
-        "command": "python",
-        "subcommand": "",
+        "description": "Email with no domain part - Python treats as valid since @ is found",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'user@' | python emailSlicer.py"
         ],
-        "stdin": "user@\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_pipe_input_valid_email",
         "category": "PIPE_INPUT",
         "description": "Valid email piped via stdin is processed correctly",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'piped@stdin.org' | python emailSlicer.py"
         ],
-        "stdin": "piped@stdin.org\n",
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is",
-        "expected_stderr": null,
         "timeout_seconds": 10
     },
     {
         "name": "test_pipe_input_invalid_email",
         "category": "PIPE_INPUT",
         "description": "Invalid email piped via stdin shows error message",
-        "command": "python",
-        "subcommand": "",
+        "command": "bash",
         "args": [
-            "emailSlicer.py"
+            "-c",
+            "echo 'not-an-email' | python emailSlicer.py"
         ],
-        "stdin": "not-an-email\n",
         "expected_exit_code": 0,
         "expected_stdout": "valid Email",
-        "expected_stderr": null,
         "timeout_seconds": 10
     }
 ]'''))
