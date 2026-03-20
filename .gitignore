@@ -20,3 +20,6 @@ __pycache__/
 .pytest_cache/
 *.pyc
 *.pyo
+
+# Model daemon test scripts
+.mcode/
