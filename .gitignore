@@ -1,0 +1,30 @@
+# Maven build output
+target/
+
+# Maven Wrapper JAR
+.mvn/wrapper/maven-wrapper.jar
+
+# Java compiled files
+*.class
+
+# IDE files
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python testing artifacts
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
