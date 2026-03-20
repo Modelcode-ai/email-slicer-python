@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-20T16:41:49.965633+00:00
+Generated at: 2026-03-20T16:46:00.184169+00:00
 Project: emailslicer-dkasargod
 Milestone: 2
 """
@@ -324,7 +324,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "true"
+CLI_COMMAND = "python"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
