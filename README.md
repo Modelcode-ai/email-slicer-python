@@ -43,7 +43,8 @@ Your domain is:  gmail.com
 src/main/java/com/emailslicer/
 ├── EmailParts.java      # Record holding username + domain
 ├── EmailSlicer.java     # Parsing logic (static slice method)
-└── Main.java            # Console I/O entry point
+├── Main.java            # Console I/O entry point
+└── Messages.java        # User-facing message constants
 
 src/test/java/com/emailslicer/
 └── EmailSlicerTest.java # JUnit 5 unit tests
