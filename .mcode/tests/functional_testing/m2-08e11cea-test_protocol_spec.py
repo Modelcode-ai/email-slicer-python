@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-20T04:58:48.629907+00:00
+Generated at: 2026-03-20T05:02:56.140345+00:00
 Project: emailslicer-dkasargod
 Milestone: 2
 """
@@ -55,7 +55,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_valid_simple_email",
         "category": "HAPPY_PATH",
         "description": "Valid simple email is parsed into username and domain",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -70,7 +70,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_valid_email_with_dots",
         "category": "HAPPY_PATH",
         "description": "Valid email with dots in username and subdomain is parsed correctly",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -85,7 +85,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_valid_email_domain_output",
         "category": "HAPPY_PATH",
         "description": "Valid email prints correct domain in output",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -100,7 +100,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_valid_email_prompt_shown",
         "category": "HAPPY_PATH",
         "description": "Application prints the email prompt before reading input",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -115,7 +115,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_valid_email_with_leading_whitespace",
         "category": "HAPPY_PATH",
         "description": "Leading whitespace is trimmed before parsing (matches Python strip() behavior)",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -130,7 +130,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_valid_email_with_trailing_whitespace",
         "category": "HAPPY_PATH",
         "description": "Trailing whitespace is trimmed before parsing (matches Python strip() behavior)",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -145,7 +145,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_valid_email_with_surrounding_whitespace",
         "category": "HAPPY_PATH",
         "description": "Both leading and trailing whitespace is trimmed",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -160,7 +160,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_no_at_sign",
         "category": "INVALID_ARGS",
         "description": "Email without @ sign prints error message",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -175,7 +175,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_multiple_at_signs",
         "category": "BOUNDARY",
         "description": "Email with multiple @ signs is treated as valid by Python (uses first @ for split)",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -190,7 +190,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_empty_username",
         "category": "BOUNDARY",
         "description": "Email with empty username part (@domain.com) is treated as valid by Python (@ is present)",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -205,7 +205,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_empty_domain",
         "category": "BOUNDARY",
         "description": "Email with empty domain part (user@) is treated as valid by Python (@ is present)",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -220,7 +220,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_just_at_sign",
         "category": "BOUNDARY",
         "description": "Single @ character is treated as valid by Python (@ is present)",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -235,7 +235,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_empty_string",
         "category": "BOUNDARY",
         "description": "Empty input string prints error message",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -250,7 +250,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_whitespace_only",
         "category": "BOUNDARY",
         "description": "Whitespace-only input is trimmed to empty and prints error message",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -265,7 +265,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_at_in_multiple_positions",
         "category": "BOUNDARY",
         "description": "Input with @ signs in multiple positions is treated as valid by Python (splits on first @)",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -280,7 +280,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_minimal_valid_email",
         "category": "BOUNDARY",
         "description": "Minimal valid email (single char username and domain) is accepted",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -295,7 +295,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_minimal_valid_domain_output",
         "category": "BOUNDARY",
         "description": "Minimal valid email prints correct domain",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -310,7 +310,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_pipe_valid_email",
         "category": "PIPE_INPUT",
         "description": "Valid email piped via stdin is processed correctly",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -325,7 +325,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_pipe_invalid_email",
         "category": "PIPE_INPUT",
         "description": "Invalid email piped via stdin prints error message",
-        "command": "python3",
+        "command": "./pyrun",
         "subcommand": "",
         "args": [
             "emailSlicer.py"
@@ -339,7 +339,7 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
 ]'''))
 
 # CLI binary/entry point
-CLI_COMMAND = "python3"
+CLI_COMMAND = "./pyrun"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
