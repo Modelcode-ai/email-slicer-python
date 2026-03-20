@@ -1,0 +1,28 @@
+# Maven build output
+target/
+
+# IDE files
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java compiled files
+*.class
+
+# Python test artifacts
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
