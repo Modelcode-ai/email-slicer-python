@@ -1,0 +1,71 @@
+#!/bin/sh
+# Maven Wrapper script — downloads Maven if not already cached, then runs it.
+# Based on https://github.com/apache/maven-wrapper
+
+set -e
+
+# Determine the project base directory
+if [ -z "$MAVEN_PROJECTBASEDIR" ]; then
+  MAVEN_PROJECTBASEDIR=$(cd "$(dirname "$0")" && pwd)
+  export MAVEN_PROJECTBASEDIR
+fi
+
+WRAPPER_PROPERTIES="$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.properties"
+
+if [ ! -f "$WRAPPER_PROPERTIES" ]; then
+  echo "Error: Could not find $WRAPPER_PROPERTIES" >&2
+  exit 1
+fi
+
+# Read distributionUrl from properties file
+distributionUrl=$(grep 'distributionUrl' "$WRAPPER_PROPERTIES" | cut -d'=' -f2- | tr -d '[:space:]')
+
+if [ -z "$distributionUrl" ]; then
+  echo "Error: Could not read distributionUrl from $WRAPPER_PROPERTIES" >&2
+  exit 1
+fi
+
+# Set up Maven home in user's local cache
+MAVEN_USER_HOME="${MAVEN_USER_HOME:-$HOME/.m2}"
+WRAPPER_DIR="$MAVEN_USER_HOME/wrapper/dists"
+
+# Extract Maven version from URL for directory naming
+DIST_NAME=$(basename "$distributionUrl" .zip)
+# The zip may contain a directory without the '-bin' suffix
+MAVEN_DIR_NAME=$(echo "$DIST_NAME" | sed 's/-bin$//')
+MAVEN_HOME="$WRAPPER_DIR/$MAVEN_DIR_NAME"
+MAVEN_CMD="$MAVEN_HOME/bin/mvn"
+
+if [ ! -x "$MAVEN_CMD" ]; then
+  echo "Downloading Maven from $distributionUrl ..."
+  mkdir -p "$WRAPPER_DIR"
+  DOWNLOAD_FILE="$WRAPPER_DIR/$DIST_NAME.zip"
+
+  if command -v curl > /dev/null 2>&1; then
+    curl -fsSL -o "$DOWNLOAD_FILE" "$distributionUrl"
+  elif command -v wget > /dev/null 2>&1; then
+    wget -q -O "$DOWNLOAD_FILE" "$distributionUrl"
+  else
+    echo "Error: Neither curl nor wget found. Cannot download Maven." >&2
+    exit 1
+  fi
+
+  echo "Extracting Maven ..."
+  if command -v unzip > /dev/null 2>&1; then
+    unzip -q -o "$DOWNLOAD_FILE" -d "$WRAPPER_DIR"
+  elif command -v jar > /dev/null 2>&1; then
+    mkdir -p "$MAVEN_HOME"
+    cd "$WRAPPER_DIR"
+    jar xf "$DOWNLOAD_FILE"
+    cd "$MAVEN_PROJECTBASEDIR"
+  elif command -v python3 > /dev/null 2>&1; then
+    python3 -c "import zipfile,sys; zipfile.ZipFile(sys.argv[1]).extractall(sys.argv[2])" "$DOWNLOAD_FILE" "$WRAPPER_DIR"
+  else
+    echo "Error: No tool found to extract zip (tried unzip, jar, python3)." >&2
+    exit 1
+  fi
+  rm -f "$DOWNLOAD_FILE"
+  chmod +x "$MAVEN_CMD"
+fi
+
+exec "$MAVEN_CMD" "$@"
