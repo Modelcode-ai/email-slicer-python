@@ -9,18 +9,18 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        System.out.println("Please enter your Email Id:");
+        System.out.println(Messages.PROMPT_EMAIL);
 
         try (Scanner scanner = new Scanner(System.in)) {
             String email = scanner.nextLine().strip();
 
             EmailSlicer.slice(email).ifPresentOrElse(
                     parts -> {
-                        System.out.println("Your username is:  " + parts.username());
-                        System.out.println("Your domain is:  " + parts.domain());
+                        System.out.println(Messages.USERNAME_PREFIX + parts.username());
+                        System.out.println(Messages.DOMAIN_PREFIX + parts.domain());
                     },
                     () -> {
-                        System.out.println("Please enter a valid Email Id.");
+                        System.out.println(Messages.ERROR_INVALID_EMAIL);
                         System.exit(1);
                     }
             );
