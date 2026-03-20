@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-03-20T04:54:27.032404+00:00
+Generated at: 2026-03-20T04:56:50.719087+00:00
 Project: emailslicer-dkasargod
 Milestone: 1
 """
@@ -55,12 +55,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_simple_email",
         "category": "HAPPY_PATH",
         "description": "Valid email with simple username and domain is parsed correctly",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'user@example.com' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "user@example.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user",
         "expected_stderr": null,
@@ -70,12 +70,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_domain_printed",
         "category": "HAPPY_PATH",
         "description": "Valid email prints the domain part correctly",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'user@example.com' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "user@example.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  example.com",
         "expected_stderr": null,
@@ -85,12 +85,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_dotted_username",
         "category": "HAPPY_PATH",
         "description": "Email with dotted username (first.last) is parsed correctly",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'first.last@sub.domain.org' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "first.last@sub.domain.org",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  first.last",
         "expected_stderr": null,
@@ -100,12 +100,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_subdomain",
         "category": "HAPPY_PATH",
         "description": "Email with subdomain is parsed with full domain part",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'first.last@sub.domain.org' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "first.last@sub.domain.org",
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  sub.domain.org",
         "expected_stderr": null,
@@ -115,12 +115,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_prompt_displayed",
         "category": "HAPPY_PATH",
         "description": "Application displays the email prompt before reading input",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'test@test.com' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "test@test.com",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter your Email Id:",
         "expected_stderr": null,
@@ -130,12 +130,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_happy_path_numeric_username",
         "category": "HAPPY_PATH",
         "description": "Email with numeric username is parsed correctly",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo '12345@numbers.com' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "12345@numbers.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  12345",
         "expected_stderr": null,
@@ -145,12 +145,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_no_at_sign",
         "category": "INVALID_ARGS",
         "description": "Input without @ sign shows invalid email message",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'invalidemail' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "invalidemail",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
@@ -160,12 +160,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_invalid_empty_string",
         "category": "BOUNDARY",
         "description": "Empty string input shows invalid email message",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo '' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "\n",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
@@ -175,12 +175,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_whitespace_only",
         "category": "BOUNDARY",
         "description": "Whitespace-only input is trimmed and treated as invalid",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo '   ' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "   ",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
@@ -190,12 +190,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_boundary_leading_trailing_whitespace",
         "category": "BOUNDARY",
         "description": "Leading/trailing whitespace is trimmed before parsing (matching Python strip())",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo '  user@example.com  ' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "  user@example.com  ",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user",
         "expected_stderr": null,
@@ -204,13 +204,13 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_boundary_at_sign_only",
         "category": "BOUNDARY",
-        "description": "Input of just '@' \u2014 contains @ so is treated as valid by Python original",
-        "command": "bash",
+        "description": "Input of just '@' contains @ so is treated as valid by Python original",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo '@' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "@",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:",
         "expected_stderr": null,
@@ -219,13 +219,13 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_boundary_multiple_at_signs",
         "category": "BOUNDARY",
-        "description": "Input with multiple @ signs \u2014 Python original uses first @ index for split",
-        "command": "bash",
+        "description": "Input with multiple @ signs uses first @ index for split",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'user@@domain.com' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "user@@domain.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  user",
         "expected_stderr": null,
@@ -234,13 +234,13 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_boundary_multiple_at_domain",
         "category": "BOUNDARY",
-        "description": "Input with multiple @ signs \u2014 domain includes everything after first @",
-        "command": "bash",
+        "description": "Input with multiple @ signs has domain with everything after first @",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'user@@domain.com' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "user@@domain.com",
         "expected_exit_code": 0,
         "expected_stdout": "Your domain is:  @domain.com",
         "expected_stderr": null,
@@ -249,13 +249,13 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
     {
         "name": "test_pipe_input_valid_email",
         "category": "PIPE_INPUT",
-        "description": "Email piped via echo to stdin is parsed correctly",
-        "command": "bash",
+        "description": "Email piped via stdin is parsed correctly",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'piped@stdin.io' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "piped@stdin.io",
         "expected_exit_code": 0,
         "expected_stdout": "Your username is:  piped",
         "expected_stderr": null,
@@ -265,12 +265,12 @@ TEST_CASES = resolve_env_placeholders(json.loads(r'''[
         "name": "test_pipe_input_invalid_email",
         "category": "PIPE_INPUT",
         "description": "Invalid email piped via stdin shows error message",
-        "command": "bash",
+        "command": "python",
         "subcommand": "",
         "args": [
-            "-c",
-            "echo 'nope' | python emailSlicer.py"
+            "emailSlicer.py"
         ],
+        "stdin": "nope",
         "expected_exit_code": 0,
         "expected_stdout": "Please enter a valid Email Id.",
         "expected_stderr": null,
