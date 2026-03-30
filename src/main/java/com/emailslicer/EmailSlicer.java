@@ -25,13 +25,13 @@ public final class EmailSlicer {
      */
     public static EmailSliceResult slice(String email) {
         if (email == null || email.isBlank()) {
-            throw new IllegalArgumentException("Please enter a valid Email Id.");
+            throw new IllegalArgumentException(Messages.INVALID_EMAIL);
         }
 
         String trimmed = email.strip();
 
         if (!trimmed.contains("@")) {
-            throw new IllegalArgumentException("Please enter a valid Email Id.");
+            throw new IllegalArgumentException(Messages.INVALID_EMAIL);
         }
 
         int atIndex = trimmed.indexOf("@");

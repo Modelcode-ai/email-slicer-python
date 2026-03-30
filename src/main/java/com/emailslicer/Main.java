@@ -16,15 +16,15 @@ public final class Main {
     }
 
     public static void main(String[] args) {
-        System.out.println("Please enter your Email Id:");
+        System.out.println(Messages.PROMPT_EMAIL);
 
         try (Scanner scanner = new Scanner(System.in)) {
             String email = scanner.nextLine().strip();
 
             try {
                 EmailSliceResult result = EmailSlicer.slice(email);
-                System.out.printf("Your username is:  %s%n", result.username());
-                System.out.printf("Your domain is:  %s%n", result.domain());
+                System.out.printf(Messages.USERNAME_FORMAT + "%n", result.username());
+                System.out.printf(Messages.DOMAIN_FORMAT + "%n", result.domain());
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
                 System.exit(1);
